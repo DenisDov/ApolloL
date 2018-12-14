@@ -1,31 +1,46 @@
 import React from 'react';
-import {
-  ScrollView, StyleSheet, Text, View,
-} from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-});
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Home',
   };
 
+  ExchangeRates = () => (
+    <Query
+      query={gql`
+        {
+          rates(currency: "USD") {
+            currency
+            rate
+          }
+        }
+      `}
+    >
+      {({ loading, error, data }) => {
+        console.log('data: ', data);
+        if (loading) return <Text>Loading...</Text>;
+        if (error) return <Text>Error :(</Text>;
+        return (
+          <FlatList
+            data={data.rates}
+            renderItem={({ item }) => (
+              <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
+                <Text>{`${item.currency}: ${item.rate}`}</Text>
+              </View>
+            )}
+            keyExtractor={item => item.currency}
+          />
+        );
+      }}
+    </Query>
+  );
+
   render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <Text>skfsdkjf</Text>
-        </ScrollView>
-      </View>
-    );
+    return <View>{this.ExchangeRates()}</View>;
   }
 }
 

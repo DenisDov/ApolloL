@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
-import {
-  Platform, StatusBar, StyleSheet, View,
-} from 'react-native';
 import { createAppContainer } from 'react-navigation';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+
 import AppNavigator from './navigation/AppNavigator';
+
+const client = new ApolloClient({
+  uri: 'https://w5xlvm3vzz.lp.gql.zone/graphql',
+});
 
 const AppContainer = createAppContainer(AppNavigator);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+EStyleSheet.build();
 
 export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+      <ApolloProvider client={client}>
         <AppContainer />
-      </View>
+      </ApolloProvider>
     );
   }
 }
