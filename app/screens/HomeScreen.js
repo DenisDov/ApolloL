@@ -4,25 +4,27 @@ import { View, Text, FlatList } from 'react-native';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import { LoaderInset } from '../components/Loader';
+
+const GET_RATES = gql`
+  {
+    rates(currency: "USD") {
+      currency
+      rate
+    }
+  }
+`;
+
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Home',
   };
 
   ExchangeRates = () => (
-    <Query
-      query={gql`
-        {
-          rates(currency: "USD") {
-            currency
-            rate
-          }
-        }
-      `}
-    >
+    <Query query={GET_RATES}>
       {({ loading, error, data }) => {
         console.log('data: ', data);
-        if (loading) return <Text>Loading...</Text>;
+        if (loading) return <LoaderInset />;
         if (error) return <Text>Error :(</Text>;
         return (
           <FlatList
@@ -40,7 +42,7 @@ class HomeScreen extends React.Component {
   );
 
   render() {
-    return <View>{this.ExchangeRates()}</View>;
+    return <View style={{ flex: 1 }}>{this.ExchangeRates()}</View>;
   }
 }
 

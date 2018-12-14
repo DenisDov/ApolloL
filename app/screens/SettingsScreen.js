@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+
+import { LoaderInset } from '../components/Loader';
 
 class SettingsScreen extends Component {
   static navigationOptions = {
@@ -8,8 +10,8 @@ class SettingsScreen extends Component {
 
   render() {
     return (
-      <View>
-        <Text>smnvbsd,mnvs,mnv.s</Text>
+      <View style={{ flex: 1 }}>
+        <LoaderInset />
       </View>
     );
   }
