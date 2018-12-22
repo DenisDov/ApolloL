@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  View, Text, FlatList, Image,
-} from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Touchable from 'react-native-platform-touchable';
 import { showMessage } from 'react-native-flash-message';
@@ -36,10 +34,7 @@ const GET_RATES = gql`
   {
     allPosts {
       id
-      date
       title
-      imgUrl
-      description
     }
   }
 `;
@@ -60,21 +55,22 @@ class HomeScreen extends React.Component {
   ExchangeRates = () => (
     <Query query={GET_RATES}>
       {({
-        loading, error, data, refetch,
+        loading, error, data: { allPosts }, refetch,
       }) => {
-        console.log('data: ', data);
+        console.log('allPosts: ', allPosts);
         if (loading) return <LoaderInset />;
         if (error) return <Text>Something was wrong...</Text>;
         return (
           <FlatList
-            data={data.allPosts}
+            data={allPosts}
             onRefresh={() => this._handleRefresh(refetch)}
             refreshing={loading}
             renderItem={({ item }) => (
-              <Touchable style={styles.post}>
+              <Touchable
+                style={styles.post}
+                onPress={() => this.props.navigation.navigate('Post', { id: item.id })}
+              >
                 <View>
-                  <Text style={{ fontSize: 12, color: '#617886' }}>{item.date}</Text>
-                  <Image source={{ uri: item.imgUrl }} style={{ height: 200 }} resizeMode="cover" />
                   <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{item.title}</Text>
                 </View>
               </Touchable>

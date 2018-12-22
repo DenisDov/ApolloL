@@ -7,6 +7,8 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import TabBarIcon from '../components/TabBarIcon';
 
 import HomeScreen from '../screens/HomeScreen';
+import PostScreen from '../screens/PostScreen';
+
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
@@ -16,6 +18,7 @@ const ICON_PREFIX = Platform.OS === 'ios' ? 'ios' : 'md';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
+  Post: PostScreen,
 });
 
 HomeStack.navigationOptions = {
