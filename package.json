@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --write \"*.js\"",
-    "format-code": "yarn prettier && yarn lint:fix",
-    "debug": "REACT_DEBUGGER='unset ELECTRON_RUN_AS_NODE && open -g rndebugger://set-debugger-loc?port=19001 ||' expo start"
+    "format-code": "yarn prettier && yarn lint:fix"
   },
   "lint-staged": {
     "*.js": [
@@ -22,7 +21,6 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@expo/samples": "2.1.1",
     "apollo-boost": "^0.1.22",
     "expo": "^31.0.2",
     "graphql": "^14.0.2",
@@ -31,7 +29,10 @@
     "react-apollo": "^2.3.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-extended-stylesheet": "^0.11.0",
+    "react-native-flash-message": "^0.1.10",
     "react-native-paper": "^2.3.0",
+    "react-native-platform-touchable": "^1.1.1",
+    "react-native-ui-lib": "^3.9.1",
     "react-navigation": "^3.0.8",
     "react-navigation-material-bottom-tabs": "^1.0.0"
   },
